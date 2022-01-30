@@ -24,6 +24,7 @@ public:
         this->value = value;
 //        std::cout << "node created with value " << this->value << std::endl;
     }
+
 //    ~Node(){
 ////        delete this;
 ////        std::cout << "node Deleted" << std::endl;

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+
 #include "Node.h"
 
 #ifndef BST_BST_H
@@ -19,22 +20,61 @@ public:
     }
     ~BST(){
         deleteTree();
-//        std::cout << "Tree deleted!" << std::endl;
+        std::cout << "Tree deleted!" << std::endl;
     }
 
+    void remove(T num){
+        deleteNode(root, num);
+    }
+    void deleteNode(Node<T> *& nodePtr, T num){
+        if (nodePtr == nullptr){
+            std::cerr << "Node Does NOT Exist!" << std::endl;
+            return;
+        }
+        if (num < nodePtr->getValue()){
+            deleteNode(nodePtr->refLeft(), num);
+        } else if (num > nodePtr->getValue()){
+            deleteNode(nodePtr->refRight(), num);
+        } else {
+            makeDeletion(nodePtr);
+//            destroySubTree(nodePtr);
+            return;
+        }
+
+    }
+    void makeDeletion(Node<T> *& nodePtr){
+        Node<T> * nodeToDelete = nodePtr;
+        Node<T> * attachPoint;
+
+        if (!nodePtr->getRight() && !nodePtr->getLeft()){
+            nodePtr = nullptr;
+        } else if (!nodePtr->getRight() && nodePtr->getLeft()){
+            nodePtr = nodePtr->refLeft();
+        } else if (nodePtr->getRight() && !nodePtr->getLeft()){
+            nodePtr = nodePtr->refRight();
+        } else{
+            attachPoint = nodePtr->getRight();
+            while(attachPoint->getLeft()){
+                attachPoint = attachPoint->getLeft();
+            }
+            attachPoint->setLeft(nodePtr->getLeft());
+            nodePtr = nodePtr->refRight();
+        }
+        delete nodeToDelete;
+   }
+
     // recursive deleting SUB-Tree
-    void destroySubTree(Node<T> * nodePtr){ // works
+    void destroySubTree(Node<T> *& nodePtr){ // works
         if (nodePtr){
             if (nodePtr->getLeft()){
-                destroySubTree(nodePtr->getLeft());
+                destroySubTree(nodePtr->refLeft());
             }
             if (nodePtr->getRight()){
-                destroySubTree(nodePtr->getRight());
+                destroySubTree(nodePtr->refRight());
             }
-            if (nodePtr == root){
-                root = nullptr;
-            }
-            delete nodePtr;
+            Node<T> * temp = nodePtr;
+            nodePtr = nullptr;
+            delete temp;
         }
     }
     void deleteTree(){ // works
@@ -49,7 +89,7 @@ public:
 
         insertNode(root, temp);
     }
-    void insertNode(Node<T> * &nodePtr, Node<T> * &newNode){ // works
+    void insertNode(Node<T> * &nodePtr, Node<T> * newNode){ // works
         if (nodePtr == nullptr){
 //            std::cout << "placeing value " << newNode->getValue() << std::endl;
             nodePtr = newNode;
@@ -62,7 +102,7 @@ public:
         }
     }
 
-    // recursive printing
+    // inOrder printing
     void print() const{ // works
         if (!root){
             std::cout << "tree empty" << std::endl;
@@ -72,12 +112,46 @@ public:
         std::cout << std::endl;
     }
     void print(Node<T> * teRoot) const{ // works
-        if (teRoot == nullptr){
+        if (teRoot){
+            print(teRoot->getLeft());
+            std::cout << teRoot->getValue() << " ";
+            print(teRoot->getRight());
+        }
+
+    }
+
+    // postOrder printing
+    void PostOrderPrint() const{ // works
+        if (!root){
+            std::cout << "tree empty" << std::endl;
             return;
         }
-        print(teRoot->getLeft());
-        std::cout << teRoot->getValue() << " ";
-        print(teRoot->getRight());
+        PostOrderPrint(root);
+        std::cout << std::endl;
+    }
+    void PostOrderPrint(Node<T> * teRoot) const{ // works
+        if (teRoot){
+            PostOrderPrint(teRoot->getLeft());
+            PostOrderPrint(teRoot->getRight());
+            std::cout << teRoot->getValue() << " ";
+        }
+    }
+
+    // preOrder printing
+    void PreOrderPrint() const{ // works
+        if (!root){
+            std::cout << "tree empty" << std::endl;
+            return;
+        }
+        PreOrderPrint(root);
+        std::cout << std::endl;
+    }
+    void PreOrderPrint(Node<T> * teRoot) const{ // works
+        if (teRoot){
+            std::cout << teRoot->getValue() << " ";
+            PreOrderPrint(teRoot->getLeft());
+            PreOrderPrint(teRoot->getRight());
+        }
     }
 
     // search using loop

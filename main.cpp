@@ -3,6 +3,7 @@
 using namespace std;
 
 int main() {
+
     BST<int> x;
     x.insert(4);
 //    x.insert(3);
@@ -13,30 +14,14 @@ int main() {
     x.insert(3);
     x.insert(1);
     x.print();
-    x.deleteTree();
-    x.insert(20);
-    x.insert(30);
-    x.insert(-100);
+    x.remove(2);
     x.print();
+    cout << "preorder: ";
+    x.PreOrderPrint();
 
-    BST<char> u;
-    u.insert('g');
-    u.insert('h');
-    u.insert('e');
-    u.insert('u');
-    u.insert('a');
-    u.insert('d');
-    u.insert('l');
-    u.print();
-
-    BST<string> v;
-    v.insert("ACT");
-    v.insert("SAT");
-    v.insert("EUAEL");
-    v.print();
-
+    cout << "postorder: ";
+    x.PostOrderPrint();
 
     cout << "Hello, World!" << endl;
-
     return 0;
 }
