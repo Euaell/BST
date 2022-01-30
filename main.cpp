@@ -14,9 +14,9 @@ int main() {
     x.insert(1);
     x.print();
     x.deleteTree();
-    x.insert(2);
-    x.insert(3);
-    x.insert(1);
+    x.insert(20);
+    x.insert(30);
+    x.insert(-100);
     x.print();
 
     BST<char> u;
@@ -36,8 +36,6 @@ int main() {
     v.print();
 
 
-    string y = "zeuael" > "mekonen"? "euael": "mekonen";
-    cout << y << endl;
     cout << "Hello, World!" << endl;
 
     return 0;

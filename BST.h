@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <cstdlib>
 #include "Node.h"
 
 #ifndef BST_BST_H
@@ -20,34 +19,29 @@ public:
     }
     ~BST(){
         deleteTree();
-        std::cout << "Tree deleted!" << std::endl;
+//        std::cout << "Tree deleted!" << std::endl;
     }
 
+    // recursive deleting SUB-Tree
     void destroySubTree(Node<T> * nodePtr){ // works
         if (nodePtr){
             if (nodePtr->getLeft()){
-//                std::cout << "about to delete left" << std::endl;
                 destroySubTree(nodePtr->getLeft());
-//                std::cout << "returning form deleting left" << std::endl;
             }
             if (nodePtr->getRight()){
-//                std::cout << "about to delete right" << std::endl;
                 destroySubTree(nodePtr->getRight());
-//                std::cout << "returning form deleting right" << std::endl;
             }
-
-//            std::cout << "deleting " << nodePtr->getValue() << std::endl;
             if (nodePtr == root){
                 root = nullptr;
             }
-            free(nodePtr);
+            delete nodePtr;
         }
     }
     void deleteTree(){ // works
         destroySubTree(root);
-//        std::cout << "Tree cleaned" << std::endl;
     }
 
+    // recursive insersion
     void insert(T num){ // works
         auto *temp = new Node<T>(num);
         temp->setRight(nullptr);

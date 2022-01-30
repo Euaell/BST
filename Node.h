@@ -16,18 +16,18 @@ public:
     Node(){
         this->right = nullptr;
         this->left = nullptr;
-        std::cout << "node created" << std::endl;
+//        std::cout << "Empty node created" << std::endl;
     }
     explicit Node(T value){
         this->right = nullptr;
         this->left = nullptr;
         this->value = value;
-//        std::cout << "node created" << std::endl;
+//        std::cout << "node created with value " << this->value << std::endl;
     }
-    ~Node(){
-        free(this);
-        std::cout << "node Deleted" << std::endl;
-    }
+//    ~Node(){
+////        delete this;
+////        std::cout << "node Deleted" << std::endl;
+//    }
 
 //    Getters
     T getValue(){
